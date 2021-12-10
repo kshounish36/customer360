@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\CustomerVersions;
 use App\Repository\CustomerVersionsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,18 +28,41 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Route("/api", name="api")
+     * @Route("/api/{id}", name="api")
      */
-    public function index(CustomerVersionsRepository $customerVersionsRepository): Response
+    //public function index(CustomerVersionsRepository $customerVersionsRepository): Response
+    public function index($id='', EntityManagerInterface $em): Response
     {
-        $post = $customerVersionsRepository->findAll();
-        dump($this->getBearerToken()); die;
+        $sql = 'SELECT CV.*,C.name AS country_name
+        FROM customer_versions AS CV
+        LEFT JOIN country AS C ON CV.country_id  = C.id';
+
+        if(!empty($id))
+        {
+            $sql = $sql.' WHERE CV.id = '.$id;
+        }
+
+        $stmt = $em->getConnection()->prepare($sql);
+        $result = $stmt->executeQuery()->fetchAllAssociative();
+
+        if(empty($result))
+        {
+            return $this->json([
+                'customerDetails'   => '',
+                'status'            => 0,
+            ]);
+        }
 
         return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/PostController.php',
+            'customerDetails'   => json_encode($result),
+            'status'            => 1,
         ]);
     }
+
+//    public function getCustomerDetails(CustomerVersionsRepository $customerVersionsRepository): Response
+//    {
+//
+//    }
 
     public function getBearerToken()
     {
