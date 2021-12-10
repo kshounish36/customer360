@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 09, 2021 at 12:53 PM
+-- Generation Time: Dec 10, 2021 at 01:42 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.3.29
 
@@ -66,6 +66,25 @@ CREATE TABLE `contract_vehicles` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `country`
+--
+
+CREATE TABLE `country` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `country`
+--
+
+INSERT INTO `country` (`id`, `name`) VALUES
+(1, 'INDIA'),
+(2, 'GERMANY');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `customer_versions`
 --
 
@@ -91,7 +110,8 @@ CREATE TABLE `customer_versions` (
 --
 
 INSERT INTO `customer_versions` (`id`, `customer_id`, `firstname`, `surname`, `email_private`, `date_of_birth`, `phone_home`, `phone_business`, `phone_mobile`, `street`, `house_number`, `zip`, `city`, `country_id`) VALUES
-(1, 1, 'Prasanna', 'Mondal', 'prasannawitcher@gmail.com', '1989-07-18', '9836240762', '9836240762', '9836240762', 'Diamond Harbor Road', '127/3/1', '700063', 'Kolkata', 1);
+(1, 1, 'Prasanna', 'Mondal', 'prasannawitcher@gmail.com', '1989-07-18', '9836240762', '9836240762', '9836240762', 'Diamond Harbor Road', '127/3/1', '700063', 'Kolkata', 1),
+(2, 2, 'TEST', 'IGNORE', 'test@gmail.com', '2021-12-01', '22222222', '2333333333', '111111111', 'test', 'test', '2222222', 'test', 2);
 
 -- --------------------------------------------------------
 
@@ -110,7 +130,8 @@ CREATE TABLE `doctrine_migration_versions` (
 --
 
 INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
-('DoctrineMigrations\\Version20211209105307', '2021-12-09 11:53:21', 55);
+('DoctrineMigrations\\Version20211209105307', '2021-12-09 11:53:21', 55),
+('DoctrineMigrations\\Version20211210093558', '2021-12-10 10:36:10', 42);
 
 -- --------------------------------------------------------
 
@@ -155,6 +176,12 @@ ALTER TABLE `contract_vehicles`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `country`
+--
+ALTER TABLE `country`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `customer_versions`
 --
 ALTER TABLE `customer_versions`
@@ -195,10 +222,16 @@ ALTER TABLE `contract_vehicles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `country`
+--
+ALTER TABLE `country`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `customer_versions`
 --
 ALTER TABLE `customer_versions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `product_versions`
